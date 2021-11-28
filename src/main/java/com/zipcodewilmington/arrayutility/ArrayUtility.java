@@ -1,5 +1,7 @@
 package com.zipcodewilmington.arrayutility;
 
+import java.util.ArrayList;
+
 /**
  * Created by leon on 3/6/18.
  */
@@ -15,13 +17,38 @@ public class ArrayUtility <genericType> {
 
     public genericType[] removeValue(genericType valueToRemove) {
 
+
+
+
+
+
+
+
         return null;
     }
 
     public Integer getNumberOfOccurrences(genericType valueToEvaluate) {
+        // originally made another list, but don't need in hindsight
+//        ArrayList<genericType> placeToPutValuesThatMatchValueToEvaluate = new ArrayList<>();
+
+        // created counter to count how many times valueToEvaluate appears
+        int howManyValuesMatch = 0;
+
+        // looping through checking each element in global anArray declared above
+        for (genericType element : this.anArray) {
+            if (element == valueToEvaluate) {
+//                placeToPutValuesThatMatchValueToEvaluate.add(element); // do not need this in hindsight
+                // add the current element to the counter
+                howManyValuesMatch++;
+            }
+        }
+        // return the counter count
+        return howManyValuesMatch;
 
 
-        return null;
+
+
+//        return null;
     }
 
     public genericType getMostCommonFromMerge(genericType[] arrayToMerge) {
