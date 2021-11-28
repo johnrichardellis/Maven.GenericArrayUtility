@@ -63,13 +63,38 @@ public class ArrayUtility <genericType> {
 
     public genericType getMostCommonFromMerge(genericType[] arrayToMerge) {
 
+//        T mostcommon = null;
+//
+//        for(int i = 0; i < inputArray.length; i++){
+//            for(int j = 0; j < arrayToMerge.length; j++){
+//                if(inputArray[i] == arrayToMerge[j]){
+//                    mostcommon = inputArray[i];
+//                }
+//            }
+//        }
+//        return mostcommon;
+
+        // created counter
+        genericType mostCommonElement = null;
+
+        // two for loops comparing the elements in each array
+        for (int element1 = 0; element1 < anArray.length; element1++) {
+            for (int element2 = 0; element2 < arrayToMerge.length; element2++) {
+
+                // if any two elements between the arrays are the same, then add it to mostCommonElement
+                if (anArray[element1] == arrayToMerge[element2]) {
+                    mostCommonElement = anArray[element1];
+                }
+            }
+        }
+
+
+        // return the most
+        return mostCommonElement;
 
 
 
-
-
-
-        return null;
+//        return null;
     }
 
     // changed parameter types to generic types, this will cover different types of parameters in our tests
