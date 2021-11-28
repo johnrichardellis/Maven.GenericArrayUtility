@@ -1,6 +1,7 @@
 package com.zipcodewilmington.arrayutility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by leon on 3/6/18.
@@ -17,14 +18,23 @@ public class ArrayUtility <genericType> {
 
     public genericType[] removeValue(genericType valueToRemove) {
 
+        // making a list to add valuesToStay to, values to remove will not be added
+        ArrayList <genericType> valuesThatStay = new ArrayList<>();
+
+        // loop through and add all elements that dont match to valuesThatStay list
+        for (genericType element : anArray) {
+            if (element != valueToRemove) {
+                valuesThatStay.add(element);
+            }
+        }
+
+        // return valuesThatStay .to an array . copy of anArray with size of the new valuesThatStay array
+        return valuesThatStay.toArray(Arrays.copyOf(anArray, valuesThatStay.size()));
 
 
 
 
-
-
-
-        return null;
+//        return null;
     }
 
     public Integer getNumberOfOccurrences(genericType valueToEvaluate) {
@@ -52,6 +62,12 @@ public class ArrayUtility <genericType> {
     }
 
     public genericType getMostCommonFromMerge(genericType[] arrayToMerge) {
+
+
+
+
+
+
 
         return null;
     }
