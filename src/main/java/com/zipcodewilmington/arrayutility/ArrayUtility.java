@@ -1,126 +1,134 @@
 package com.zipcodewilmington.arrayutility;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created by leon on 3/6/18.
  */
-public class ArrayUtility <genericType> {
+public class ArrayUtility<T> {
 
     // declaring an array of some generic type
-    genericType[] anArray;
+    public T[] array;
 
-    public ArrayUtility(genericType[] input) {
-        this.anArray = input;
+    public ArrayUtility(T[] array) {
+        this.array = array;
     }
 
 
-    public genericType[] removeValue(genericType valueToRemove) {
+    public int countDuplicatesInMerge(T[] arrayToMerge, T valueToEvaluate) {
+        //given two arrays, count the number of occurrences of valueToEvaluate
+        //can either loop through both separately or merge and then loop
 
-        // making a list to add valuesToStay to, values to remove will not be added
-        ArrayList <genericType> valuesThatStay = new ArrayList<>();
-
-        // loop through and add all elements that dont match to valuesThatStay list
-        for (genericType element : anArray) {
-            if (element != valueToRemove) {
-                valuesThatStay.add(element);
+        int count = 0;
+        for (T element : array) {
+            if (element.equals(valueToEvaluate)) {
+                count++;
             }
         }
+        for (T element : arrayToMerge) {
+            if (element.equals(valueToEvaluate)) {
+                count++;
+            }
+        }
+        return count;
+    }
 
-        // return valuesThatStay .to an array . copy of anArray with size of the new valuesThatStay array
-        return valuesThatStay.toArray(Arrays.copyOf(anArray, valuesThatStay.size()));
 
+    public T[] removeValue(T valueToRemove) {
+
+        // create new arrayList where elements not matching valueToRemove will be placed
+        // loop through original array
+        // populate arrayWithValuesRemoved
+        // convert arrayList to array
+        // return arrayWithValuesRemoved
+
+        Integer removeCounter = getNumberOfOccurrences(valueToRemove);
+
+        Integer counter = 0;
+
+        //create a new array where the length is the length of array minus the value to remove
+        T[] arrayWithElementsRemoved = Arrays.copyOf(this.array, this.array.length - removeCounter);
+
+        //loop through the array
+        for (T element : array) {
+            if (!element.equals(valueToRemove)) {
+                //if element is not the value to remove
+                // add to new array at position counter (the index, essentially)
+                // the current element
+                // this is how the array is getting populated
+                arrayWithElementsRemoved[counter++] = element;
+            }
+        }
+        //return the array
+        return arrayWithElementsRemoved;
+
+
+    }
+
+    public Integer getNumberOfOccurrences(T valueToEvaluate) {
+
+        // loop through array
+        // if element = valueToEvaluate
+        // update counter
+        // return counter
+
+        int counter = 0;
+
+        for (T element : array) {
+            if (element.equals(valueToEvaluate)) {
+                counter++;
+            }
+        }
+        return counter;
 
 
 
 //        return null;
     }
 
-    public Integer getNumberOfOccurrences(genericType valueToEvaluate) {
-        // originally made another list, but don't need in hindsight
-//        ArrayList<genericType> placeToPutValuesThatMatchValueToEvaluate = new ArrayList<>();
+    public T getMostCommonFromMerge(T[] arrayToMerge) {
 
-        // created counter to count how many times valueToEvaluate appears
-        int howManyValuesMatch = 0;
+        //given 2 arrays
+        // count most common element between two arrays
 
-        // looping through checking each element in global anArray declared above
-        for (genericType element : this.anArray) {
-            if (element == valueToEvaluate) {
-//                placeToPutValuesThatMatchValueToEvaluate.add(element); // do not need this in hindsight
-                // add the current element to the counter
-                howManyValuesMatch++;
+        //created counter
+        int counter = 0;
+        // variable that will contain the most common element
+        T mostCommonElement = null;
+        //map that has generic T as key, and the frequency as the value
+        Map<T, Integer> frequency = new HashMap<>();
+
+        //loop through first array
+        for (T element : array) {
+            // takes frequency map and update each time with element as key, and frequency
+            // of that element at the value
+            frequency.put(element, frequency.getOrDefault(element, 0) + 1);
+            // sets current count variable equal to how may times that element has occurred
+            int currentCount = frequency.get(element);
+            // if currentCount is more than counter
+            if (currentCount > counter) {
+                // update counter to currentCount value
+                counter = currentCount;
+                // the new mostCommonElement is the current element
+                mostCommonElement = element;
             }
         }
-        // return the counter count
-        return howManyValuesMatch;
-
-
-
-
-//        return null;
-    }
-
-    public genericType getMostCommonFromMerge(genericType[] arrayToMerge) {
-
-//        T mostcommon = null;
-//
-//        for(int i = 0; i < inputArray.length; i++){
-//            for(int j = 0; j < arrayToMerge.length; j++){
-//                if(inputArray[i] == arrayToMerge[j]){
-//                    mostcommon = inputArray[i];
-//                }
-//            }
-//        }
-//        return mostcommon;
-
-        // created counter
-        genericType mostCommonElement = null;
-
-        // two for loops comparing the elements in each array
-        for (int element1 = 0; element1 < anArray.length; element1++) {
-            for (int element2 = 0; element2 < arrayToMerge.length; element2++) {
-
-                // if any two elements between the arrays are the same, then add it to mostCommonElement
-                if (anArray[element1] == arrayToMerge[element2]) {
-                    mostCommonElement = anArray[element1];
-                }
+        // same logic as above
+        for (T element : arrayToMerge) {
+            frequency.put(element, frequency.getOrDefault(element, 0) + 1);
+            int currentCount = frequency.get(element);
+            if (currentCount > counter) {
+                counter = currentCount;
+                mostCommonElement = element;
             }
         }
-
-
-        // return the most
         return mostCommonElement;
-
-
-
 //        return null;
     }
 
-    // changed parameter types to generic types, this will cover different types of parameters in our tests
-    public Integer countDuplicatesInMerge(genericType[] arrayToMerge, genericType valueToEvaluate) {
-
-        // made a counter to see how many times valueToEvaluate orrurs in the two arrays
-        int howManyDuplicates = 0;
-
-        // looping through to see how many times valueToEval appears
-        for (genericType element : anArray) {
-            if (element != valueToEvaluate) {
-                continue;
-            }
-            howManyDuplicates++;
-        }
-
-        // looping through to see how many times valueToEval appears
-        for (genericType element : arrayToMerge) {
-            if (element != valueToEvaluate) {
-                continue;
-            }
-            howManyDuplicates++;
-        }
-
-        // returning the final count after looping through both
-        return  howManyDuplicates;
-    }
 
 }
+
+
+
